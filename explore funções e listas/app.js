@@ -1,9 +1,12 @@
+let listaSorteados = [];
+let numeroLimite = 10;
 let numeroSecreto = gerarNumero();
 let tentativas = 1;
 
 function exibirTexto(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
+    responsiveVoice.speak(texto, 'Brazilian Portuguese Female', {rate: 1.2});
 }
 
 function exibirMensagemInicial() {
@@ -36,7 +39,19 @@ function verificarChute() {
 }
 
 function gerarNumero() {
-    return parseInt(Math.random() * 10 + 1);
+    let numeroSorteado = parseInt(Math.random() * numeroLimite + 1);
+    let quantidadeSorteados = listaSorteados.length;
+
+    if(quantidadeSorteados == numeroLimite) {
+        listaSorteados = [];
+    }
+    if (listaSorteados.includes(numeroSorteado)) {
+        return gerarNumero();
+    } else {
+        listaSorteados.push(numeroSorteado);
+        console.log(listaSorteados);
+        return numeroSorteado;
+    }
 }
 
 function limparCampo() {
